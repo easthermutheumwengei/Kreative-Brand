@@ -1,10 +1,11 @@
+
 from flask import render_template, flash, request, redirect,url_for
 from . import auth
 from flask_login import login_user,login_required,logout_user
 from .forms import RegistrationForm, LoginForm
 from ..models import User
 from .. import db
-# from ..email import mail_message
+from ..email import mail_message
 
 @auth.route('/login', methods = ['GET','POST'])
 def login():
@@ -31,7 +32,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        # mail_message("Welcome to Kreative Brands","email/welcome_user", user.email, user=user)
+        mail_message("Welcome to Kreative Brands","email/welcome_user", user.email, user=user)
         return redirect(url_for('auth.login'))
         title = "New Account"
     return render_template('auth/register.html',registration_form = form)
