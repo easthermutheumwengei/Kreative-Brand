@@ -1,4 +1,4 @@
-from app.models import User, Blog, Comment
+from app.models import User, Product
 from flask import render_template, abort
 from . import main
 from flask_login import login_required, current_user
@@ -18,7 +18,7 @@ def about():
 def profile(name):
     user = User.query.filter_by(username = name).first()
     user_id = current_user._get_current_object().id
-    message = Blog.query.filter_by(user_id = user_id).all()
+    message = Product.query.filter_by(user_id = user_id).all()
     if user is None:
         abort(404)
 
