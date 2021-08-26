@@ -1,0 +1,3 @@
+Hello {{user.username}}
+Welcome to Kreative Brands.
+We have seen you have signed up for our application and we are happy to welcome you to the family. Please enjoy interacting with our vass display of products and services.

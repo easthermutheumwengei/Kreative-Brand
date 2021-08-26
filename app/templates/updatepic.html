@@ -1,0 +1,13 @@
+
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
+
+
+{% block content %}
+<form  action="{{url_for('main.update_photo')}}" method="post" enctype = "multipart/form-data">
+
+    <input type="file"  name="photo" class="form-control" required>
+    <input type="submit">
+</form>
+
+{% endblock%}
