@@ -1,15 +1,23 @@
-from app.models import User, Product
+from app.models import User, Product,Order
 from flask import render_template, abort,flash, request, redirect,url_for
 from .. import db, photos
 from . import main
 from flask_login import login_required, current_user
-from .forms import Product_Form
+from .forms import Product_Form ,Order_Form
+from ..email import mail_message
+
 
 @main.route('/')
 def index():
 
     title= 'Welcome to Kreative Brands'
     return render_template('index.html', title = title)
+
+@main.route('/placeorder')
+def placeorder():
+    products = Product.query.all()
+    title= 'Welcome to Kreative Brands'
+    return render_template('placeorder.html', title = title, products = products)
 
 @main.route('/about')
 def about():
@@ -36,25 +44,37 @@ def profile(name):
 
     return render_template("profile/profile.html", user = user,posts=message)
 
+
 @main.route('/admin/add', methods = ["GET","POST"])
 def add_product():
     form = Product_Form()
-
     if form.validate_on_submit():
-        product = Product(name = form.name.data, category= form.category.data, description= form.description.data ,price = form.price.data)
-        db.session.add(product)
-        db.session.commit()
-
-        return redirect(url_for('main.index'))
+        if 'photo' in request.files:
+            filename = photos.save(request.files['photo'])
+            path = f'photos/{filename}'
+            product = Product( image_path = path , name = form.name.data, category= form.category.data, description= form.description.data ,price = form.price.data)
+            db.session.add(product)
+            db.session.commit()
+        return redirect(url_for('main.placeorder'))
     tittle = 'New Product'
     return render_template('newproduct.html', tittle = tittle, addProduct_form = form)
 
-@main.route('/admin/add_photo', methods = ["GET","POST"])
-def update_photo():
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        Product.profile_pic_path = path
-        db.session.commit()
-        return redirect(url_for('main.index'))
-    return render_template('update-pic.html')
+@main.route('/order', methods = ["GET","POST"])
+def order_product():
+    form = Order_Form()
+    if form.validate_on_submit():
+        if 'photo' in request.files:
+            filename = photos.save(request.files['photo'])
+            path = f'photos/{filename}'
+            order = Order(image_path = path, category= form.category.data, quantity= form.quantity.data, description= form.description.data , phone = form.phone.data , pod = form.pod.data, name = form.name.data , email= form.email.data)
+            db.session.add(order)
+            db.session.commit()
+        mail_message("Welcome to Kreative Brands","email/order_user", order.email, order=order)
+        return redirect(url_for('main.datab'))
+    title = 'Checkout'
+    return render_template('orderproduct.html', tittle = title, orderProduct_form = form)
+
+
+
+
+

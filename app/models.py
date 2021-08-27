@@ -5,7 +5,6 @@ from werkzeug.security import generate_password_hash,check_password_hash
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True)
@@ -15,7 +14,7 @@ class User(UserMixin, db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     product = db.relationship('Product', backref='user', lazy='dynamic')
-    comment = db.relationship('Comment', backref='user', lazy='dynamic')
+    order = db.relationship('Order', backref='user', lazy='dynamic')
     
     
     @property
@@ -35,8 +34,7 @@ class User(UserMixin, db.Model):
     
     def __repr__(self):
         return f'User {self.username}'
-
-class Product(db.Model):
+class Product(UserMixin, db.Model):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(255),nullable = False)
@@ -44,7 +42,7 @@ class Product(db.Model):
     description = db.Column(db.String(255),nullable = False)
     category= db.Column(db.String(255),nullable = False)
     image_path = db.Column(db.String())
-    comment = db.relationship('Comment',backref='product',lazy='dynamic')
+    orders = db.relationship('Order',backref='product',lazy='dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     time = db.Column(db.DateTime, default = datetime.utcnow)
     
@@ -55,20 +53,25 @@ class Product(db.Model):
         
     def __repr__(self):
         return f'Product {self.post}'
-
-class Comment(db.Model):
-    __tablename__ = 'comments'
+class Order(db.Model):
+    __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
-    comment = db.Column(db.Text(),nullable = False)
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable = False)
-    product_id = db.Column(db.Integer,db.ForeignKey('products.id'),nullable = False)
-    def add_coment(self):
+    category = db.Column(db.Text(),nullable = False)
+    quantity = db.Column(db.Text(),nullable = False)
+    description = db.Column(db.Text(),nullable = False)
+    pod = db.Column(db.Text(),nullable = False)
+    name = db.Column(db.Text(),nullable = False)
+    phone = db.Column(db.Text(),nullable = False)
+    email = db.Column(db.Text(),nullable = False)
+    image_path = db.Column(db.String())
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'), nullable = True)
+    product_id = db.Column(db.Integer,db.ForeignKey('products.id'), nullable = True)
+    def add_oredr(self):
         db.session.add(self)
         db.session.commit()
-   
     @classmethod
-    def get_comments(cls,product_id):
-        comments = Comment.query.filter_by(product_id= product_id).all()
-        return comments
+    def get_order(cls,product_id):
+        order = Order.query.filter_by(product_id= id).all()
+        return order
     def __repr__(self):
-        return f'comment:{self.comment}'
+        return f'Order:{self.order}'
