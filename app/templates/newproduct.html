@@ -1,0 +1,12 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
+{% block content %}
+<div class="col-md-2"></div>
+<div class="col-md-8">
+    <form  action="{{url_for('main.add_product')}}" method="post" enctype = "multipart/form-data">
+        <input type="file"  name="photo" class="form-control" required>
+        {{wtf.quick_form(addProduct_form)}}
+    </form>
+</div>
+<div class="col-md-2"></div>
+{% endblock%}

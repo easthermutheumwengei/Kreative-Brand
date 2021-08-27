@@ -1,0 +1,78 @@
+
+{%extends 'base.html'%} 
+
+{% import 'bootstrap/wtf.html' as wtf%} 
+
+{% block styles %} {{super()}}
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}"> {% endblock %} {%block content%}
+
+<div class='container bg-info'>
+    <div class='button'>
+    </div>
+
+    <div class="text-center about">
+        <h1>{{tittle}}</h1>
+        <p> Composing customer-facing messages can be daunting for some individuals. Speaking on the phone is one thing but having to put their thoughts in writing is another.Businesses can prepare by creating templates for the most common types of communication
+            a business sends.</p>
+    </div>
+    <div class="text-center">
+        <h1>{{story}}</h1>
+        <p> We created Tailor Brands with the mission of democratizing branding, and making it simple for anyone to get their business off the ground. We want to empower businesses, by making people believe in them. And we do this by giving everyone access
+            to good branding and design.</p>
+    </div>
+
+</div>
+<div class="container overview">
+    <div class="brands">
+        <h1> <em>200k</em> </h1>
+        <p>Number of Kreative Brands users around the world</p>
+    </div>
+    <div class="designs brands">
+        <h1> <em>5k</em> </h1>
+        <p>Number of designs created by our designers.
+
+        </p>
+    </div>
+    <div class="workers brands">
+        <h1> <em>100</em> </h1>
+        <p>Number of workers in Kenya
+
+        </p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <img src="static/photos/emoji.png">
+
+            </div>
+
+        </div><br>
+        <div class="col-md-3">
+            <div class="card">
+                <img src="static/photos/emoji.png">
+
+            </div>
+
+        </div>
+
+        <div class="col align-self-start" class="description">
+            <p>Hi, We’re designers, creatives, technologists and, well, business owners. We know that starting a business is hard, confusing and overwhelming. We get it. We also know that you need people to believe in you in order to get your business off
+                the ground. Whether it’s getting a loan or attracting your first customer. Regards, Jameson company</p>
+            <hr>
+            <p>“We’re here to help your business look great so that you can get to work doing what you love.”</p>
+            <hr>
+            <p>And we do this by making it ridiculously simple (and fun!) to create a unique online brand identity (logo, website and designs) in minutes and with zero design experience. In short, we’re here to help your business look great so that you can
+                get to work doing what you love. Regards, Esther Collections.
+
+            </p>
+        </div>
+
+    </div>
+</div>
+{%endblock%}
