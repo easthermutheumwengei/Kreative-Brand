@@ -4,7 +4,7 @@ from wtforms.validators import Required,Email,EqualTo
 from ..models import User
 
 class Order_Form(FlaskForm):
-    category = SelectField('Select Product', choices=[('Mug','Mug'),('Hoodie','Hoodie'),('Tshirt','Tshirt')],validators=[Required()])
+    category = SelectField('Select Product', choices=[('Mug','Mug'),('Hoodie','Hoodie'),('Tshirt','Tshirt'),('Tshirt','Tshirt')],validators=[Required()])
     quantity = StringField('How many selected items do you need?',validators = [Required()])
     description = StringField('Kindly describe how you want us to brand your above product',validators = [Required()])
     pod= SelectField('Which method will you prefer?', choices=[('Pay on delivery','Pay on delivery'),('Deposit 50% and pay the rest on delivery','Deposit 50% and pay the rest on delivery')],validators=[Required()])
